@@ -482,3 +482,69 @@ button {
   font-size: 0.95em;
 }
 .kategori-urun-item:last-child { border-bottom: none; }
+
+/* =========================================
+   LOGIN / GİRİŞ SAYFASI
+   ========================================= */
+.login-container {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.login-container h1 {
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-container input {
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: white;
+  color: #111827;
+  transition: border-color 0.2s;
+}
+
+.login-container input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.login-container button {
+  padding: 0.75rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.login-container button:hover {
+  background: var(--primary-hover);
+}
+
+.error-message {
+  color: #dc2626;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
