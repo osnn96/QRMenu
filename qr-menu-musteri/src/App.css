@@ -282,15 +282,21 @@ header small {
 textarea { 
   width: 100%; 
   padding: 12px; 
-  border: 1px solid #ddd; 
+  border: 2px solid #dee2e6; 
   border-radius: 8px; 
   margin-top: 10px; 
   font-family: inherit; 
   resize: none;
   color: #212529; /* Textarea yazısı koyu */
+  background: white; /* Arka plan beyaz */
   font-size: 1rem;
 }
 
 textarea::placeholder {
-  color: #6c757d; /* Placeholder açık gri */
+  color: #868e96; /* Placeholder orta gri */
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #d32f2f; /* Focus'ta kırmızı border */
 }

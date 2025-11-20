@@ -224,11 +224,16 @@ button {
 
 .urun-ekle-form input {
   padding: 0.75rem;
-  border: 1px solid #d1d5db;
+  border: 2px solid #d1d5db;
   border-radius: 6px;
   font-size: 0.9rem;
+  background: white;
+  color: #111827;
 }
-.urun-ekle-form input:focus { outline: 2px solid var(--primary); border-color: transparent; }
+.urun-ekle-form input:focus { 
+  outline: none; 
+  border-color: var(--primary);
+}
 
 .urun-ekle-form button {
   background: var(--primary);
@@ -285,24 +290,65 @@ button {
   margin-bottom: 0.75rem;
   border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  color: var(--text-main); /* Yazı rengi */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-item > span {
+  flex: 1;
+  font-weight: 600;
+  color: #111827;
+  font-size: 0.95rem;
+}
+
+.qty-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .qty-controls button {
-  border: 1px solid #e5e7eb;
+  border: 2px solid #d1d5db;
   background: white;
-  color: var(--text-main);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  color: #111827;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 36px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.qty-controls button:hover { background: #f9fafb; border-color: #d1d5db; }
+
+.qty-controls button:hover { 
+  background: #f3f4f6; 
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.qty-controls > span {
+  font-weight: 700;
+  color: #111827;
+  min-width: 30px;
+  text-align: center;
+  font-size: 1rem;
+}
 
 /* Sil Butonu (Modal İçi) */
 .btn-modal-sil {
   background-color: #fee2e2 !important;
-  color: #ef4444 !important;
-  border-color: transparent !important;
+  color: #dc2626 !important;
+  border-color: #fecaca !important;
+  font-weight: 600 !important;
+  padding: 6px 14px !important;
+  margin-left: 4px !important;
 }
-.btn-modal-sil:hover { background-color: #fecaca !important; }
+.btn-modal-sil:hover { 
+  background-color: #fecaca !important;
+  border-color: #dc2626 !important;
+}
 
 /* Modal Altı (Ekleme ve Kaydetme) */
 .modal-add-new {
@@ -354,11 +400,23 @@ button {
 .modal-note-area textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 2px solid #d1d5db;
   border-radius: 6px;
   min-height: 60px;
   font-family: inherit;
   resize: vertical;
+  background: white; /* Beyaz arka plan */
+  color: #111827; /* Koyu yazı */
+  font-size: 0.95rem;
+}
+
+.modal-note-area textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.modal-note-area textarea::placeholder {
+  color: #9ca3af;
 }
 
 /* --- YENİ KATEGORİ BAZLI MENÜ YÖNETİMİ --- */
