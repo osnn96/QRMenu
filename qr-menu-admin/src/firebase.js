@@ -14,12 +14,19 @@ const firebaseConfig = {
 };
 
 // Yapılandırmanın doğru yüklendiğini kontrol et
+console.log("🔥 Firebase Config:", {
+  apiKey: firebaseConfig.apiKey ? "✓ Var" : "❌ YOK",
+  authDomain: firebaseConfig.authDomain,
+  projectId: firebaseConfig.projectId
+});
+
 if (!firebaseConfig.apiKey) {
   console.error("❌ Firebase yapılandırması yüklenemedi! .env dosyasını kontrol edin.");
 }
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+console.log("✅ Firebase başlatıldı:", app.name);
 
 // Firestore veritabanı servisini başlat ve dışa aktar
 export const db = getFirestore(app); 

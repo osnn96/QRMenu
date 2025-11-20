@@ -19,13 +19,25 @@ function LoginPage({ setGirisYapti }) {
 
   const handleLogin = async (e) => {
     e.preventDefault(); 
-    setError(""); 
+    setError("");
+    console.log("🔐 Giriş deneniyor:", email);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("✅ Giriş başarılı:", userCredential.user.email);
       setGirisYapti(true); 
     } catch (err) {
-      console.error(err);
-      setError("Hatalı e-posta veya şifre.");
+      console.error("❌ Giriş hatası:", err.code, err.message);
+      if (err.code === 'auth/user-not-found') {
+        setError("Bu e-posta adresi kayıtlı değil.");
+      } else if (err.code === 'auth/wrong-password') {
+        setError("Şifre hatalı.");
+      } else if (err.code === 'auth/invalid-email') {
+        setError("Geçersiz e-posta formatı.");
+      } else if (err.code === 'auth/invalid-credential') {
+        setError("E-posta veya şifre hatalı.");
+      } else {
+        setError("Giriş yapılamadı: " + err.message);
+      }
     }
   };
 
