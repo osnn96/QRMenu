@@ -1,59 +1,77 @@
 /* =========================================
-   MOBİL MENÜ TASARIMI
+   MOBİL MENÜ TASARIMI (DÜZELTİLMİŞ)
    ========================================= */
 :root {
-  --primary: #d32f2f; /* İştah açıcı kırmızı */
+  --primary: #d32f2f;
   --bg-color: #f8f9fa;
-  --card-bg: #ffffff;
   --text-dark: #212529;
   --text-muted: #6c757d;
-  --shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
+/* BODY: Flexbox'ı kaldırdık, standart akışa döndük */
 body {
-  background-color: var(--bg-color);
+  background-color: #f0f2f5; /* Arka plan hafif gri (PC için) */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   margin: 0;
-  padding-bottom: 80px; /* Sepet barı için boşluk */
+  padding: 0;
+  padding-bottom: 80px; /* Sepet için alt boşluk */
 }
 
+/* APP: Hem Mobilde Hem PC'de Düzgün Görünüm */
 .App {
-  max-width: 600px; /* Mobilde çok genişlemesin */
-  margin: 0 auto;
+  width: 100%;
+  max-width: 480px; /* Standart bir telefon genişliğinde sınırla */
+  margin: 0 auto;   /* Ortala (PC'de ortada durmasını sağlayan kod bu) */
   background: white;
   min-height: 100vh;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05); /* PC'de şık dursun diye gölge */
+  position: relative;
 }
 
-/* ÜST HEADER */
+/* HEADER DÜZELTMESİ */
 header {
   background: white;
   padding: 15px;
-  text-align: center;
+  text-align: center; /* Başlığı zorla ortala */
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  /* Header'ın genişliği de App genişliğiyle sınırlı kalsın */
+  width: 100%;
+  max-width: 480px; 
+  margin: 0 auto; /* Header'ı da ortala */
 }
 
 header h1 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--text-dark);
+  text-align: center; /* Başlık yazısını ortala */
+  width: 100%;
 }
 
-/* KATEGORİ NAVİGASYONU (YATAY KAYDIRMA) */
+/* NAVİGASYON DÜZELTMESİ */
 .kategori-nav {
   display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 10px 15px;
   gap: 10px;
   background: white;
   position: sticky;
-  top: 55px; /* Header'ın hemen altına yapışsın */
+  top: 58px; /* Header yüksekliğine göre */
   z-index: 99;
   border-bottom: 1px solid #eee;
+  /* Navigasyon da taşmasın */
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  box-sizing: border-box; /* Padding taşmasını engelle */
   scrollbar-width: none; /* Firefox scroll gizle */
 }
+
 .kategori-nav::-webkit-scrollbar { display: none; } /* Chrome scroll gizle */
 
 .nav-item {
@@ -88,11 +106,13 @@ header h1 {
   padding: 0 15px;
 }
 
+/* GÖRSELLERİN SOLA KAYMASINI ENGELLEME */
 .urun-karti {
   display: flex;
+  align-items: center; /* Dikey ortala */
   background: white;
   border-bottom: 1px solid #eee;
-  padding: 15px 0;
+  padding: 15px; /* Kenarlardan boşluk bırak */
   gap: 15px;
 }
 
