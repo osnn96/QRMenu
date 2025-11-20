@@ -1,0 +1,67 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ============================================
+    // MENÜ ÜRÜNLERİ KOLEKSIYONU
+    // ============================================
+    // Herkes okuyabilir, sadece giriş yapan admin yazabilir
+    match /urunler/{urunId} {
+      // Okuma: Herkes (müşteriler menüyü görebilmeli)
+      allow read: if true;
+      
+      // Yazma: Sadece giriş yapan kullanıcılar (admin paneli)
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // ============================================
+    // SİPARİŞLER KOLEKSIYONU
+    // ============================================
+    // Müşteriler sipariş oluşturabilir, adminler tümünü görebilir
+    match /siparisler/{siparisId} {
+      // Okuma: Sadece giriş yapan admin
+      allow read: if request.auth != null;
+      
+      // Oluşturma: Herkes (müşteriler sipariş verebilmeli)
+      // Ancak bazı alanlar zorunlu olmalı
+      allow create: if request.resource.data.keys().hasAll([
+        'masaNo', 
+        'urunler', 
+        'toplamFiyat', 
+        'durum', 
+        'tarih'
+      ]) 
+      && request.resource.data.durum == 'Beklemede'
+      && request.resource.data.toplamFiyat is number
+      && request.resource.data.toplamFiyat > 0;
+      
+      // Güncelleme/Silme: Sadece giriş yapan admin
+      allow update, delete: if request.auth != null;
+    }
+    
+    // ============================================
+    // KATEGORİLER KOLEKSIYONU (varsa)
+    // ============================================
+    match /kategoriler/{kategoriId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // ============================================
+    // AYARLAR KOLEKSIYONU (varsa)
+    // ============================================
+    match /ayarlar/{ayarId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // ============================================
+    // DİĞER TÜM KOLEKSIYONLAR
+    // ============================================
+    // Tanımlanmamış koleksiyonlara varsayılan olarak erişim engellenir
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,86 @@
+[
+  {"ad": "Tavuk şiş dürüm", "fiyat": 175, "kategori": "Dürümler"},
+  {"ad": "Adana dürüm", "fiyat": 200, "kategori": "Dürümler"},
+  {"ad": "Urfa dürüm", "fiyat": 200, "kategori": "Dürümler"},
+
+  {"ad": "Domates kebabı", "fiyat": 350, "kategori": "Kebaplar"},
+  {"ad": "Patlıcan kebabı", "fiyat": 350, "kategori": "Kebaplar"},
+  {"ad": "Adana kebabı", "fiyat": 250, "kategori": "Kebaplar"},
+  {"ad": "Urfa kebabı", "fiyat": 250, "kategori": "Kebaplar"},
+
+  {"ad": "Kazan dibi", "fiyat": 40, "kategori": "Tatlılar"},
+  {"ad": "Sütlaç", "fiyat": 40, "kategori": "Tatlılar"},
+  {"ad": "Tavuk göğsü", "fiyat": 40, "kategori": "Tatlılar"},
+  {"ad": "Profiterol", "fiyat": 40, "kategori": "Tatlılar"},
+
+  {"ad": "1 kişilik salata", "fiyat": 35, "kategori": "Salatalar"},
+  {"ad": "2 kişilik salata", "fiyat": 70, "kategori": "Salatalar"},
+  {"ad": "4 kişilik salata", "fiyat": 100, "kategori": "Salatalar"},
+
+  {"ad": "Ayran 270 ml", "fiyat": 35, "kategori": "İçecekler"},
+  {"ad": "Ayran 1 L", "fiyat": 100, "kategori": "İçecekler"},
+  {"ad": "Ayran 1.5 L", "fiyat": 135, "kategori": "İçecekler"},
+
+  {"ad": "Kutu kola (330 ml)", "fiyat": 50, "kategori": "İçecekler"},
+  {"ad": "Cam şişe kola (200 ml)", "fiyat": 45, "kategori": "İçecekler"},
+  {"ad": "1 L kola", "fiyat": 75, "kategori": "İçecekler"},
+  {"ad": "1.5 L kola", "fiyat": 100, "kategori": "İçecekler"},
+  {"ad": "2.5 L kola", "fiyat": 140, "kategori": "İçecekler"},
+
+  {"ad": "Şalgam 300 ml (acısız)", "fiyat": 45, "kategori": "İçecekler"},
+  {"ad": "Şalgam 300 ml (acılı)", "fiyat": 45, "kategori": "İçecekler"},
+
+  {"ad": "Soğuk çay Bergamot (500 ml)", "fiyat": 65, "kategori": "İçecekler"},
+  {"ad": "Soğuk çay Şeftali (500 ml)", "fiyat": 65, "kategori": "İçecekler"},
+  {"ad": "Soğuk çay Limon (500 ml)", "fiyat": 65, "kategori": "İçecekler"},
+  {"ad": "1 L Bergamot", "fiyat": 75, "kategori": "İçecekler"},
+  {"ad": "1 L Şeftali", "fiyat": 75, "kategori": "İçecekler"},
+  {"ad": "1 L Limon", "fiyat": 75, "kategori": "İçecekler"},
+  {"ad": "2.5 L Şeftali", "fiyat": 125, "kategori": "İçecekler"},
+
+  {"ad": "Çamlıca sade gazoz 200 ml", "fiyat": 50, "kategori": "İçecekler"},
+  {"ad": "Çamlıca limonlu gazoz 200 ml", "fiyat": 50, "kategori": "İçecekler"},
+  {"ad": "Çamlıca portakallı 330 ml", "fiyat": 60, "kategori": "İçecekler"},
+  {"ad": "Çamlıca limonlu gazoz 2.5 L", "fiyat": 125, "kategori": "İçecekler"},
+
+  {"ad": "Meyve suyu şeftali (330 ml)", "fiyat": 60, "kategori": "İçecekler"},
+  {"ad": "Meyve suyu kayısı (330 ml)", "fiyat": 60, "kategori": "İçecekler"},
+  {"ad": "Meyve suyu vişne (330 ml)", "fiyat": 60, "kategori": "İçecekler"},
+  {"ad": "Meyve suyu kiraz (330 ml)", "fiyat": 60, "kategori": "İçecekler"},
+  {"ad": "Meyve suyu karışık (330 ml)", "fiyat": 60, "kategori": "İçecekler"},
+
+  {"ad": "1 kg kanat", "fiyat": 425, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1 kg tavuk şiş", "fiyat": 425, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1 kg pirzola", "fiyat": 425, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1 kg yaprak kanat", "fiyat": 550, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1 kg sucuk", "fiyat": 950, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1 kg köfte", "fiyat": 950, "kategori": "Kiloluk Ürünler"},
+
+  {"ad": "1,5 kg tavuk şiş", "fiyat": 550, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1,5 kg kanat", "fiyat": 550, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1,5 kg pirzola", "fiyat": 550, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1,5 kg yaprak kanat", "fiyat": 825, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1,5 kg köfte", "fiyat": 1275, "kategori": "Kiloluk Ürünler"},
+  {"ad": "1,5 kg sucuk", "fiyat": 1275, "kategori": "Kiloluk Ürünler"},
+  
+  {"ad": "1 porsiyon kanat", "fiyat": 195, "kategori": "Porsiyonlar"},
+  {"ad": "1 porsiyon pirzola", "fiyat": 195, "kategori": "Porsiyonlar"},
+  {"ad": "1 porsiyon tavuk şiş", "fiyat": 195, "kategori": "Porsiyonlar"},
+  {"ad": "1 porsiyon yaprak kanat", "fiyat": 250, "kategori": "Porsiyonlar"},
+  {"ad": "1 porsiyon sucuk", "fiyat": 250, "kategori": "Porsiyonlar"},
+  {"ad": "1 porsiyon köfte", "fiyat": 250, "kategori": "Porsiyonlar"},
+
+  {"ad": "1.5 şiş kanat", "fiyat": 300, "kategori": "Porsiyonlar"},
+  {"ad": "1.5 şiş tavuk şiş", "fiyat": 300, "kategori": "Porsiyonlar"},
+  {"ad": "1.5 şiş pirzola", "fiyat": 300, "kategori": "Porsiyonlar"},
+  {"ad": "1.5 şiş yaprak kanat", "fiyat": 375, "kategori": "Porsiyonlar"},
+  {"ad": "1.5 şiş sucuk", "fiyat": 375, "kategori": "Porsiyonlar"},
+  {"ad": "1.5 şiş köfte", "fiyat": 375, "kategori": "Porsiyonlar"},
+
+  {"ad": "Yarım kg kanat", "fiyat": 250, "kategori": "Yarım Kilo"},
+  {"ad": "Yarım kg pirzola", "fiyat": 250, "kategori": "Yarım Kilo"},
+  {"ad": "Yarım kg tavuk şiş", "fiyat": 250, "kategori": "Yarım Kilo"},
+  {"ad": "Yarım kg köfte", "fiyat": 550, "kategori": "Yarım Kilo"},
+  {"ad": "Yarım kg sucuk", "fiyat": 550, "kategori": "Yarım Kilo"},
+  {"ad": "Yarım kg yaprak kanat", "fiyat": 350, "kategori": "Yarım Kilo"}
+]
