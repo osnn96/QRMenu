@@ -39,7 +39,7 @@ html, body {
 /* 2. HEADER (BAŞLIK ORTALAMA GARANTİSİ) */
 header {
   background: white;
-  padding: 15px;
+  padding: 15px 10px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -49,6 +49,7 @@ header {
   align-items: center;  /* Yatay ortala */
   justify-content: center; /* Dikey ortala */
   width: 100%;
+  text-align: center;
 }
 
 header h1 {
@@ -113,7 +114,7 @@ header small {
   display: flex;
   flex-direction: row; /* Yan yana diz */
   align-items: flex-start; /* Yukarı hizala */
-  padding: 12px 15px; /* Mobilde kenarlara daha fazla boşluk */
+  padding: 12px 10px; /* Dengeli kenar boşlukları */
   border-bottom: 1px solid #f1f1f1;
   gap: 12px; /* Resim ile yazı arası */
   width: 100%;
