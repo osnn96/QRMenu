@@ -428,7 +428,7 @@ function SiparisPaneli() {
     }, 60000);
     
     return () => { unsubscribe(); clearInterval(interval); };
-  }, [siparisler]);
+  }, []);
 
   const durumDegistir = async (id, yeniDurum) => {
     const guncellemeler = { durum: yeniDurum };
