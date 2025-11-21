@@ -393,33 +393,13 @@ function SiparisPaneli() {
     
     const q = query(collection(db, "siparisler"), orderBy("siparisZamani", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      console.log("🔥 Firebase snapshot geldi! Doküman sayısı:", snapshot.docs.length);
-      
       const yeniSiparisler = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       
-      console.log("✅ Siparişler array'e dönüştürüldü:", yeniSiparisler.length, "adet");
-      
-      // DEBUG: İlk siparişin tüm detaylarını göster
-      if (yeniSiparisler.length > 0) {
-        console.log("🔍 İLK SİPARİŞ DETAYI:", JSON.stringify(yeniSiparisler[0], null, 2));
-      } else {
-        console.log("❌ HİÇ SİPARİŞ YOK!");
-      }
-      
-      console.log("📋 TÜM SİPARİŞLER:", yeniSiparisler.length, "adet");
-      yeniSiparisler.forEach((s, i) => {
-        console.log(`  ${i+1}. Masa: ${s.masaNo}, Durum: "${s.durum}", Tamamlanmış mı: ${s.tamamlandi}`);
-      });
-      
       // Yeni sipariş kontrolü - "Yeni" veya "Bekliyor" durumundaki siparişler
-      const bekleyenSiparisler = yeniSiparisler.filter(s => {
-        const bekliyor = s.durum === "Yeni" || s.durum === "Bekliyor" || !s.tamamlandi;
-        console.log(`  Filter: Masa ${s.masaNo}, Durum: "${s.durum}", Bekliyor: ${bekliyor}`);
-        return bekliyor;
-      });
+      const bekleyenSiparisler = yeniSiparisler.filter(s => 
+        s.durum === "Yeni" || s.durum === "Bekliyor" || !s.tamamlandi
+      );
       const yeniBekleyenSayisi = bekleyenSiparisler.length;
-      
-      console.log("📊 Bekleyen siparişler:", yeniBekleyenSayisi, "Önceki:", oncekiBekleyenSayisiRef.current, "Ses:", sesAktifRef.current, "İlk yükleme:", ilkYukleme);
       
       // İlk yükleme değilse VE bekleyen sipariş sayısı arttıysa VE ses aktifse
       if (!ilkYukleme && yeniBekleyenSayisi > oncekiBekleyenSayisiRef.current && sesAktifRef.current) {
@@ -438,12 +418,45 @@ function SiparisPaneli() {
     }
     menuGetir();
 
-    const interval = setInterval(() => setZamanTetikleyici(p => p + 1), 60000);
+    // İlk yüklemede eski siparişleri temizle
+    eskiSiparisleriTemizle();
+    
+    // Her dakika hem zaman güncellemesi hem temizlik yap
+    const interval = setInterval(() => {
+      setZamanTetikleyici(p => p + 1);
+      eskiSiparisleriTemizle();
+    }, 60000);
+    
     return () => { unsubscribe(); clearInterval(interval); };
-  }, []);
+  }, [siparisler]);
 
   const durumDegistir = async (id, yeniDurum) => {
-    await updateDoc(doc(db, "siparisler", id), { durum: yeniDurum });
+    const guncellemeler = { durum: yeniDurum };
+    
+    // Eğer durum "Tamamlandı" ise, silme zamanını kaydet
+    if (yeniDurum === "Tamamlandı") {
+      const silmeZamani = Date.now() + (24 * 60 * 60 * 1000); // 24 saat sonra
+      guncellemeler.silinecekZaman = silmeZamani;
+      console.log("⏰ Sipariş tamamlandı. 24 saat sonra silinecek:", new Date(silmeZamani).toLocaleString('tr-TR'));
+    }
+    
+    await updateDoc(doc(db, "siparisler", id), guncellemeler);
+  };
+  
+  // Silinmesi gereken eski siparişleri temizle
+  const eskiSiparisleriTemizle = async () => {
+    const simdi = Date.now();
+    
+    siparisler.forEach(async (siparis) => {
+      if (siparis.silinecekZaman && siparis.silinecekZaman < simdi) {
+        try {
+          await deleteDoc(doc(db, "siparisler", siparis.id));
+          console.log("🗑️ Eski sipariş silindi:", siparis.masaNo);
+        } catch (err) {
+          console.error("❌ Silme hatası:", err);
+        }
+      }
+    });
   };
 
   const siparisiSil = async (id) => {
