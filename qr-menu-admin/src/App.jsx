@@ -1,6 +1,6 @@
 // qr-menu-admin/src/App.jsx
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { auth, db } from './firebase'; 
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"; 
 import { 
@@ -324,11 +324,112 @@ function SiparisPaneli() {
   const [menu, setMenu] = useState([]); 
   const [duzenlenecekSiparis, setDuzenlenecekSiparis] = useState(null); 
   const [zamanTetikleyici, setZamanTetikleyici] = useState(0);
+  const [sesAktif, setSesAktif] = useState(false);
+  
+  // useRef ile önceki değeri takip et (closure problemi çözümü)
+  const oncekiBekleyenSayisiRef = useRef(0);
+  const sesAktifRef = useRef(sesAktif);
+
+  // Ref'i her değiştiğinde güncelle
+  useEffect(() => {
+    sesAktifRef.current = sesAktif;
+    console.log("🔄 sesAktifRef güncellendi:", sesAktif);
+  }, [sesAktif]);
+
+  // ⚡ SÜPER GÜÇLÜ ALARM SESİ - 9 beep!
+  const bildirimSesiCal = () => {
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Tek bir beep sesi oluştur (daha güçlü!)
+      const beep = (delay, frequency = 900, duration = 0.5, volume = 0.8) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = 'square'; // Square wave daha keskin ses
+        
+        // MAKSIMUM ses seviyesi!
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime + delay);
+        gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + delay + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + delay + duration);
+        
+        oscillator.start(audioContext.currentTime + delay);
+        oscillator.stop(audioContext.currentTime + delay + duration);
+      };
+      
+      // 🚨 ALARM PATTERN - 9 beep (3x3)
+      
+      // Set 1: Hızlı 3 beep (Dikkat çekici!)
+      beep(0, 950, 0.25, 0.8);
+      beep(0.3, 950, 0.25, 0.8);
+      beep(0.6, 950, 0.25, 0.8);
+      
+      // Kısa pause
+      
+      // Set 2: Orta tempo 3 beep (Vurgulamalı)
+      beep(1.1, 1100, 0.4, 0.85);
+      beep(1.6, 1100, 0.4, 0.85);
+      beep(2.1, 1100, 0.4, 0.85);
+      
+      // Kısa pause
+      
+      // Set 3: Uzun 3 beep (KAÇIRILMAZ!)
+      beep(2.8, 1200, 0.6, 0.9);
+      beep(3.5, 1200, 0.6, 0.9);
+      beep(4.2, 1200, 0.6, 0.9);
+      
+      console.log("� SÜPER GÜÇLÜ ALARM! (9 beep, ~5 saniye)");
+    } catch (err) {
+      console.error("❌ Ses hatası:", err);
+    }
+  };
 
   useEffect(() => {
+    let ilkYukleme = true;
+    
     const q = query(collection(db, "siparisler"), orderBy("siparisZamani", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      setSiparisler(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      console.log("🔥 Firebase snapshot geldi! Doküman sayısı:", snapshot.docs.length);
+      
+      const yeniSiparisler = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      console.log("✅ Siparişler array'e dönüştürüldü:", yeniSiparisler.length, "adet");
+      
+      // DEBUG: İlk siparişin tüm detaylarını göster
+      if (yeniSiparisler.length > 0) {
+        console.log("🔍 İLK SİPARİŞ DETAYI:", JSON.stringify(yeniSiparisler[0], null, 2));
+      } else {
+        console.log("❌ HİÇ SİPARİŞ YOK!");
+      }
+      
+      console.log("📋 TÜM SİPARİŞLER:", yeniSiparisler.length, "adet");
+      yeniSiparisler.forEach((s, i) => {
+        console.log(`  ${i+1}. Masa: ${s.masaNo}, Durum: "${s.durum}", Tamamlanmış mı: ${s.tamamlandi}`);
+      });
+      
+      // Yeni sipariş kontrolü - "Yeni" veya "Bekliyor" durumundaki siparişler
+      const bekleyenSiparisler = yeniSiparisler.filter(s => {
+        const bekliyor = s.durum === "Yeni" || s.durum === "Bekliyor" || !s.tamamlandi;
+        console.log(`  Filter: Masa ${s.masaNo}, Durum: "${s.durum}", Bekliyor: ${bekliyor}`);
+        return bekliyor;
+      });
+      const yeniBekleyenSayisi = bekleyenSiparisler.length;
+      
+      console.log("📊 Bekleyen siparişler:", yeniBekleyenSayisi, "Önceki:", oncekiBekleyenSayisiRef.current, "Ses:", sesAktifRef.current, "İlk yükleme:", ilkYukleme);
+      
+      // İlk yükleme değilse VE bekleyen sipariş sayısı arttıysa VE ses aktifse
+      if (!ilkYukleme && yeniBekleyenSayisi > oncekiBekleyenSayisiRef.current && sesAktifRef.current) {
+        console.log("🔔 YENİ SİPARİŞ! Ses çalınıyor...");
+        bildirimSesiCal();
+      }
+      
+      oncekiBekleyenSayisiRef.current = yeniBekleyenSayisi;
+      setSiparisler(yeniSiparisler);
+      ilkYukleme = false; // İlk yüklemeden sonra flag'i kapat
     });
     
     const menuGetir = async () => {
@@ -387,7 +488,55 @@ function SiparisPaneli() {
     <div className="App">
       <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
         <h1>Yönetim Paneli</h1>
-        <button onClick={() => auth.signOut()} style={{backgroundColor:'#333', color:'white', border:'none', padding:'8px 15px', borderRadius:'5px', cursor:'pointer'}}>Çıkış</button>
+        <div style={{display:'flex', gap:'10px', alignItems:'center'}}>
+          <button 
+            onClick={() => {
+              const yeniDurum = !sesAktif;
+              setSesAktif(yeniDurum);
+              console.log("🔊 Ses durumu:", yeniDurum ? "AÇIK" : "KAPALI");
+              
+              if (yeniDurum) {
+                // Ses aktif edildiğinde test sesi çal
+                console.log("🎵 Test sesi çalınıyor...");
+                try {
+                  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                  const oscillator = audioContext.createOscillator();
+                  const gainNode = audioContext.createGain();
+                  
+                  oscillator.connect(gainNode);
+                  gainNode.connect(audioContext.destination);
+                  
+                  oscillator.frequency.value = 600;
+                  oscillator.type = 'sine';
+                  
+                  gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                  
+                  oscillator.start(audioContext.currentTime);
+                  oscillator.stop(audioContext.currentTime + 0.3);
+                  
+                  console.log("✅ Test sesi çalındı!");
+                } catch (err) {
+                  console.error("❌ Ses hatası:", err);
+                }
+              }
+            }}
+            style={{
+              backgroundColor: sesAktif ? '#10b981' : '#6b7280',
+              color:'white',
+              border:'none',
+              padding:'8px 15px',
+              borderRadius:'5px',
+              cursor:'pointer',
+              display:'flex',
+              alignItems:'center',
+              gap:'5px'
+            }}
+          >
+            {sesAktif ? '🔔 Ses Açık' : '🔕 Ses Kapalı'}
+          </button>
+          <button onClick={() => auth.signOut()} style={{backgroundColor:'#333', color:'white', border:'none', padding:'8px 15px', borderRadius:'5px', cursor:'pointer'}}>Çıkış</button>
+        </div>
       </div>
       <hr />
       

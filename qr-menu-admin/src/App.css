@@ -368,6 +368,22 @@ button {
   border-top: 1px solid #e5e7eb;
 }
 
+.modal-add-new select {
+  background: white;
+  color: #111827;
+  border: 2px solid #d1d5db;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.modal-add-new select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
 .modal-actions {
   padding: 1.5rem;
   background: white;

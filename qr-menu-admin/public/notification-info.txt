@@ -1,0 +1,9 @@
+<!-- Notification Sound Credit -->
+<!-- 
+Bu dosya sadece referans amaçlıdır.
+Gerçek ses dosyası public/notification.mp3 olarak eklenmelidir.
+
+Ücretsiz bildirim sesi indirmek için:
+- https://mixkit.co/free-sound-effects/notification/
+- https://notificationsounds.com/
+-->
